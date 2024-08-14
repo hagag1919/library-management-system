@@ -16,8 +16,8 @@ This guide provides instructions for setting up, running, and interacting with t
 ### Step 1: Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd <repository-directory>
+git clone https://github.com/hagag1919/library-management-system.git
+cd library-management-system
 ```
 
 ### Step 2: Configure the Database
