@@ -2,6 +2,7 @@ package com.example.library_management_system.Models;
 
 import jakarta.persistence.*;
 
+@Entity
 public class Patron {
 
         @Id
