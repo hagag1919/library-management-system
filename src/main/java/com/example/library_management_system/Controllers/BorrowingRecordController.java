@@ -6,15 +6,17 @@ import com.example.library_management_system.Models.Patron;
 import com.example.library_management_system.Services.BorrowingRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 @RestController
-@RequestMapping("/borrowing-record")
+@RequestMapping("/api/borrowing-record")
 public class BorrowingRecordController {
     @Autowired
     private BorrowingRecordService borrowingRecordService;
 
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping("/borrow-book")
     public ResponseEntity<String> borrowBook(Book book, Patron patron) {
          BorrowingRecord borrowingRecord = borrowingRecordService.borrowBook(book, patron);
@@ -26,6 +28,7 @@ public class BorrowingRecordController {
 
     }
 
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping("/return-book")
     public ResponseEntity<String> returnBook(@RequestParam Long bookId,@RequestParam Long patronId) {
         BorrowingRecord borrowingRecord = borrowingRecordService.findBorrowingRecordByBookAndPatron(bookId, patronId).get();

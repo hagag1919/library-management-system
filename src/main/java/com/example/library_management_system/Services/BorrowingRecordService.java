@@ -4,6 +4,7 @@ import com.example.library_management_system.Database.BorrowingRecordRepository;
 import com.example.library_management_system.Models.Book;
 import com.example.library_management_system.Models.BorrowingRecord;
 import com.example.library_management_system.Models.Patron;
+import com.example.library_management_system.Services.IServices.IBorrowingRecordServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,15 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class BorrowingRecordService {
-    @Autowired
-    private BorrowingRecordRepository borrowingRecordRepository;
+public class BorrowingRecordService implements IBorrowingRecordServices {
+    private final BorrowingRecordRepository borrowingRecordRepository;
 
+    @Autowired
+    public BorrowingRecordService(BorrowingRecordRepository borrowingRecordRepository) {
+        this.borrowingRecordRepository = borrowingRecordRepository;
+    }
+
+    @Override
     public BorrowingRecord borrowBook(Book book, Patron patron) {
 
         BorrowingRecord borrowingRecord = new BorrowingRecord();
@@ -25,6 +31,7 @@ public class BorrowingRecordService {
         return borrowingRecordRepository.save(borrowingRecord);
     }
 
+    @Override
     public Optional<BorrowingRecord> findBorrowingRecordByBookAndPatron(Long bookId, Long patronId) {
         BorrowingRecord borrowingRecord = borrowingRecordRepository.findById(bookId).get();
 
@@ -36,6 +43,7 @@ public class BorrowingRecordService {
 
     }
 
+    @Override
     public BorrowingRecord returnBook(Long borrowingRecordId) {
         return borrowingRecordRepository.findById(borrowingRecordId).get();
     }
